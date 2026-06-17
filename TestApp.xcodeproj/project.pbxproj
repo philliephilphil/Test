@@ -8,17 +8,43 @@
 
 /* Begin PBXBuildFile section */
 		E81E6A012B0A00010000001 /* TestAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E81E6A012B0A00010000002 /* TestAppApp.swift */; };
-		E81E6A012B0A00010000003 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E81E6A012B0A00010000004 /* ContentView.swift */; };
 		E81E6A012B0A00010000005 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E81E6A012B0A00010000006 /* Assets.xcassets */; };
 		E81E6A012B0A00010000007 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E81E6A012B0A00010000008 /* Preview Assets.xcassets */; };
+		E81E6A012B0A00010000019 /* CoachingCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E81E6A012B0A0001000001A /* CoachingCategory.swift */; };
+		E81E6A012B0A0001000001B /* SessionConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = E81E6A012B0A0001000001C /* SessionConfig.swift */; };
+		E81E6A012B0A0001000001D /* AnalysisResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = E81E6A012B0A0001000001E /* AnalysisResult.swift */; };
+		E81E6A012B0A0001000001F /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = E81E6A012B0A00010000020 /* Route.swift */; };
+		E81E6A012B0A00010000021 /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E81E6A012B0A00010000022 /* KeychainService.swift */; };
+		E81E6A012B0A00010000023 /* GeminiAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E81E6A012B0A00010000024 /* GeminiAPIService.swift */; };
+		E81E6A012B0A00010000025 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E81E6A012B0A00010000026 /* SettingsViewModel.swift */; };
+		E81E6A012B0A00010000027 /* AnalysisViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E81E6A012B0A00010000028 /* AnalysisViewModel.swift */; };
+		E81E6A012B0A00010000029 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E81E6A012B0A0001000002A /* HomeView.swift */; };
+		E81E6A012B0A0001000002B /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E81E6A012B0A0001000002C /* SettingsView.swift */; };
+		E81E6A012B0A0001000002D /* SessionSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E81E6A012B0A0001000002E /* SessionSetupView.swift */; };
+		E81E6A012B0A0001000002F /* VideoPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E81E6A012B0A00010000030 /* VideoPickerView.swift */; };
+		E81E6A012B0A00010000031 /* AnalysisProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E81E6A012B0A00010000032 /* AnalysisProgressView.swift */; };
+		E81E6A012B0A00010000033 /* ResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E81E6A012B0A00010000034 /* ResultsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		E81E6A012B0A00010000009 /* TestApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E81E6A012B0A00010000002 /* TestAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestAppApp.swift; sourceTree = "<group>"; };
-		E81E6A012B0A00010000004 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		E81E6A012B0A00010000006 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E81E6A012B0A00010000008 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		E81E6A012B0A0001000001A /* CoachingCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoachingCategory.swift; sourceTree = "<group>"; };
+		E81E6A012B0A0001000001C /* SessionConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionConfig.swift; sourceTree = "<group>"; };
+		E81E6A012B0A0001000001E /* AnalysisResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalysisResult.swift; sourceTree = "<group>"; };
+		E81E6A012B0A00010000020 /* Route.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
+		E81E6A012B0A00010000022 /* KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
+		E81E6A012B0A00010000024 /* GeminiAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeminiAPIService.swift; sourceTree = "<group>"; };
+		E81E6A012B0A00010000026 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
+		E81E6A012B0A00010000028 /* AnalysisViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalysisViewModel.swift; sourceTree = "<group>"; };
+		E81E6A012B0A0001000002A /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		E81E6A012B0A0001000002C /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		E81E6A012B0A0001000002E /* SessionSetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionSetupView.swift; sourceTree = "<group>"; };
+		E81E6A012B0A00010000030 /* VideoPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPickerView.swift; sourceTree = "<group>"; };
+		E81E6A012B0A00010000032 /* AnalysisProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalysisProgressView.swift; sourceTree = "<group>"; };
+		E81E6A012B0A00010000034 /* ResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,7 +78,10 @@
 			isa = PBXGroup;
 			children = (
 				E81E6A012B0A00010000002 /* TestAppApp.swift */,
-				E81E6A012B0A00010000004 /* ContentView.swift */,
+				E81E6A012B0A00010000035 /* Models */,
+				E81E6A012B0A00010000036 /* Services */,
+				E81E6A012B0A00010000037 /* ViewModels */,
+				E81E6A012B0A00010000038 /* Views */,
 				E81E6A012B0A00010000006 /* Assets.xcassets */,
 				E81E6A012B0A0001000000E /* Preview Content */,
 			);
@@ -65,6 +94,48 @@
 				E81E6A012B0A00010000008 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		E81E6A012B0A00010000035 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				E81E6A012B0A0001000001A /* CoachingCategory.swift */,
+				E81E6A012B0A0001000001C /* SessionConfig.swift */,
+				E81E6A012B0A0001000001E /* AnalysisResult.swift */,
+				E81E6A012B0A00010000020 /* Route.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		E81E6A012B0A00010000036 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				E81E6A012B0A00010000022 /* KeychainService.swift */,
+				E81E6A012B0A00010000024 /* GeminiAPIService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		E81E6A012B0A00010000037 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				E81E6A012B0A00010000026 /* SettingsViewModel.swift */,
+				E81E6A012B0A00010000028 /* AnalysisViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		E81E6A012B0A00010000038 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				E81E6A012B0A0001000002A /* HomeView.swift */,
+				E81E6A012B0A0001000002C /* SettingsView.swift */,
+				E81E6A012B0A0001000002E /* SessionSetupView.swift */,
+				E81E6A012B0A00010000030 /* VideoPickerView.swift */,
+				E81E6A012B0A00010000032 /* AnalysisProgressView.swift */,
+				E81E6A012B0A00010000034 /* ResultsView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -137,8 +208,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E81E6A012B0A00010000003 /* ContentView.swift in Sources */,
 				E81E6A012B0A00010000001 /* TestAppApp.swift in Sources */,
+				E81E6A012B0A00010000019 /* CoachingCategory.swift in Sources */,
+				E81E6A012B0A0001000001B /* SessionConfig.swift in Sources */,
+				E81E6A012B0A0001000001D /* AnalysisResult.swift in Sources */,
+				E81E6A012B0A0001000001F /* Route.swift in Sources */,
+				E81E6A012B0A00010000021 /* KeychainService.swift in Sources */,
+				E81E6A012B0A00010000023 /* GeminiAPIService.swift in Sources */,
+				E81E6A012B0A00010000025 /* SettingsViewModel.swift in Sources */,
+				E81E6A012B0A00010000027 /* AnalysisViewModel.swift in Sources */,
+				E81E6A012B0A00010000029 /* HomeView.swift in Sources */,
+				E81E6A012B0A0001000002B /* SettingsView.swift in Sources */,
+				E81E6A012B0A0001000002D /* SessionSetupView.swift in Sources */,
+				E81E6A012B0A0001000002F /* VideoPickerView.swift in Sources */,
+				E81E6A012B0A00010000031 /* AnalysisProgressView.swift in Sources */,
+				E81E6A012B0A00010000033 /* ResultsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

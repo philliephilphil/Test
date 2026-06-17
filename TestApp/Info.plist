@@ -18,5 +18,7 @@
 	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>GT Coach benötigt Zugriff auf deine Mediathek, um das Replay-Video zu laden.</string>
 </dict>
 </plist>
