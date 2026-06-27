@@ -19,6 +19,18 @@ const OVERPASS_ENDPOINTS = [
 const SALZBURG_BUNDESLAND_FILTER =
   '["name"="Salzburg"]["boundary"="administrative"]["admin_level"="4"]';
 
+// Public Overpass instances rate-limit aggressively (HTTP 429) and occasionally
+// return gateway errors (502/503/504). Build-time fetches therefore retry with
+// exponential backoff across both endpoints before giving up. Non-retryable
+// responses (e.g. 400 for a malformed query) fail fast.
+const MAX_ATTEMPTS = 3;
+const RETRY_BACKOFF_MS = [4000, 12000];
+const RETRYABLE_STATUS = new Set([429, 502, 503, 504]);
+
+function sleep(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 export type OverpassElement = {
   type: "node" | "way" | "relation";
   id: number;
@@ -36,19 +48,38 @@ export type OverpassResponse = {
 
 export async function runOverpassQuery(query: string): Promise<OverpassResponse> {
   let lastError: unknown;
-  for (const endpoint of OVERPASS_ENDPOINTS) {
-    try {
-      const res = await fetch(endpoint, {
-        method: "POST",
-        headers: { "Content-Type": "text/plain" },
-        body: query,
-      });
-      if (!res.ok) {
-        throw new Error(`Overpass request failed: ${res.status} ${res.statusText}`);
+  for (let attempt = 0; attempt < MAX_ATTEMPTS; attempt++) {
+    for (const endpoint of OVERPASS_ENDPOINTS) {
+      let res: Response;
+      try {
+        res = await fetch(endpoint, {
+          method: "POST",
+          headers: { "Content-Type": "text/plain" },
+          body: query,
+        });
+      } catch (err) {
+        lastError = err; // network/connection error — retryable
+        continue;
       }
-      return (await res.json()) as OverpassResponse;
-    } catch (err) {
-      lastError = err;
+      if (res.ok) {
+        try {
+          return (await res.json()) as OverpassResponse;
+        } catch (err) {
+          lastError = err; // malformed/non-JSON body — retryable
+          continue;
+        }
+      }
+      lastError = new Error(`Overpass request failed: ${res.status} ${res.statusText}`);
+      if (!RETRYABLE_STATUS.has(res.status)) {
+        throw lastError; // e.g. 400 malformed query — no point retrying
+      }
+      const retryAfter = Number(res.headers.get("retry-after"));
+      if (Number.isFinite(retryAfter) && retryAfter > 0) {
+        await sleep(Math.min(retryAfter * 1000, 30000));
+      }
+    }
+    if (attempt < MAX_ATTEMPTS - 1) {
+      await sleep(RETRY_BACKOFF_MS[Math.min(attempt, RETRY_BACKOFF_MS.length - 1)]);
     }
   }
   throw lastError instanceof Error ? lastError : new Error("Overpass request failed");
