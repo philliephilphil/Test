@@ -46,6 +46,28 @@ npm test
 
 Deckt `lib/score.ts` (Potenzial-Score, reine Funktion) ab.
 
+## Deployment (Vercel)
+
+Schnellster Weg zu einer öffentlich erreichbaren Web-App — kein separater
+Datenabruf nötig, da er beim Build automatisch läuft:
+
+1. [vercel.com](https://vercel.com) → „Continue with GitHub" → autorisieren
+   (kostenloser Hobby-Tarif genügt).
+2. „Add New… → Project" → dieses Repository importieren.
+3. **Root Directory auf `bakery-dashboard` setzen** (die App liegt im
+   Unterordner, nicht im Repo-Root). Next.js wird automatisch erkannt.
+4. Production-Branch auf den gewünschten Branch stellen (Settings → Git) bzw.
+   den Branch nach `main` mergen. Jeder Push erzeugt zusätzlich automatisch
+   eine öffentliche Preview-URL.
+5. „Deploy" → nach ein paar Minuten eine öffentliche `…vercel.app`-URL.
+
+Beim Build führt npm automatisch `prebuild` (`scripts/build-data.ts`) aus und
+ruft Bezirksgrenzen, Bäckereien und Frequenz-POIs ab (best-effort: schlägt ein
+Abruf fehl, bleibt der Build grün und die App zeigt den Leerzustand).
+`next.config.ts` (`outputFileTracingIncludes`) sorgt dafür, dass die
+Datendateien in die Serverless-Funktionen gebündelt werden. Das Wetter wird
+weiterhin live pro Request abgefragt.
+
 ## Datenquellen
 
 | Schicht | Quelle | Hinweis |
@@ -112,6 +134,14 @@ hat.
   aufgeschlüsselt verfügbar gewesen.
 - **Räumliche Auflösung der Wetterdaten:** ein Referenzpunkt pro Bezirk, nicht
   pro Bäckerei — die Daten stützen keine feinere Auflösung.
+- **Snapshot-Persistenz im Hosting (Vercel):** Vercels Serverless-Dateisystem
+  ist read-only/flüchtig. Der Snapshot-Job kann dort nicht dauerhaft in
+  `data/snapshots/*.jsonl` schreiben — die Schließungen-Schicht zeigt im
+  Hosting daher dauerhaft „Datensammlung läuft". Für echte, wachsende
+  Schließungs-Historie braucht es den lokalen/Cron-Betrieb von
+  `snapshot:bakeries` oder später einen persistenten Speicher (z. B. Vercel
+  KV/Postgres). Alle anderen Schichten (Dichte, Frequenz, Lücken/Score,
+  Wetter, Brandner) laufen im Hosting mit echten Daten.
 - **Entwicklungsumgebung ohne Internetzugang zu den Ziel-APIs:** Diese App
   wurde in einer Sandbox entwickelt, deren Netzwerk-Policy ausgehende
   Verbindungen zu Overpass, Open-Meteo und salzburg.gv.at blockiert. Die
