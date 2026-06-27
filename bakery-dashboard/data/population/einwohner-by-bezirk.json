@@ -1,0 +1,15 @@
+{
+  "source": {
+    "url": "https://www.salzburg.gv.at/fileadmin/Dateien/Statistik/Bevoelkerung/statistik-bevoelkerung_2025.pdf",
+    "retrievedAt": "2026-06-27",
+    "note": "Land Salzburg Landesstatistik Bevölkerung 2025, ergänzt durch Statistik Austria Bevölkerungsstand 1.1.2025 (jeweils per-Eintrag-Periode siehe period-Feld)"
+  },
+  "entries": {
+    "Pinzgau": { "inhabitants": 90094, "period": "2025-01-01" },
+    "Pongau": { "inhabitants": null, "period": "nicht verifiziert; nur Stadtgemeinde St. Johann (11.643, 2025-01-01) bekannt, kein aktueller Bezirks-Gesamtwert gefunden" },
+    "Tennengau": { "inhabitants": 62115, "period": "2025-01-01" },
+    "Flachgau": { "inhabitants": 159208, "period": "2025-01-01" },
+    "Lungau": { "inhabitants": 20437, "period": "2023" },
+    "Salzburg-Stadt": { "inhabitants": 157659, "period": "2025-01-01" }
+  }
+}
