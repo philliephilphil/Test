@@ -1,0 +1,16 @@
+{
+  "period": "Sommersaison 2023 (Mai–Oktober)",
+  "source": {
+    "url": "https://www.salzburg.gv.at/statistik_/Seiten/statistik-th-tourismus.aspx",
+    "retrievedAt": "2026-06-27",
+    "note": "Land Salzburg Landesstatistik, Tourismus-Saisonbericht Sommer 2023 (Nächtigungen nach Bezirk)"
+  },
+  "entries": {
+    "Pinzgau": { "nights": 5840317 },
+    "Pongau": { "nights": 3981486 },
+    "Salzburg-Stadt": { "nights": 1912174 },
+    "Flachgau": { "nights": 1537760 },
+    "Tennengau": { "nights": 607930 },
+    "Lungau": { "nights": 551175 }
+  }
+}

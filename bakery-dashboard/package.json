@@ -1,0 +1,37 @@
+{
+  "name": "bakery-dashboard",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "prebuild": "tsx scripts/build-data.ts",
+    "build": "next build",
+    "build:data": "tsx scripts/build-data.ts",
+    "start": "next start",
+    "lint": "eslint",
+    "fetch:bakeries": "tsx scripts/fetch-bakeries.ts",
+    "fetch:bezirke": "tsx scripts/fetch-bezirke.ts",
+    "fetch:frequency-pois": "tsx scripts/fetch-frequency-pois.ts",
+    "snapshot:bakeries": "tsx scripts/snapshot-bakeries.ts",
+    "test": "node --import tsx --test src/lib/**/*.test.ts"
+  },
+  "dependencies": {
+    "leaflet": "^1.9.4",
+    "leaflet.heat": "^0.2.0",
+    "next": "16.2.9",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
+    "react-leaflet": "^5.0.0"
+  },
+  "devDependencies": {
+    "@types/leaflet": "^1.9.21",
+    "@types/leaflet.heat": "^0.2.5",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.2.9",
+    "tsx": "^4.22.4",
+    "typescript": "^5"
+  }
+}

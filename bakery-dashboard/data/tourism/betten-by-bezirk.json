@@ -1,0 +1,16 @@
+{
+  "period": "nicht pro Bezirk verifiziert",
+  "source": {
+    "url": "https://www.salzburg.gv.at/stat/themen/tourismus/statistik-th-tourismus-unterkunft.pdf",
+    "retrievedAt": "2026-06-27",
+    "note": "Land Salzburg Landesstatistik, Tourismus-Unterkunftsstatistik. Landesweiter Gesamtwert (>231.000 Gästebetten, >12.600 Unterkünfte) bestätigt; die Aufschlüsselung nach Bezirk liegt laut Quelle in dieser PDF vor, konnte aber aus diesem netzwerk-eingeschränkten Build nicht live abgerufen/transkribiert werden. Bitte beim ersten echten Datenabgleich aus der PDF nachtragen, statt zu schätzen."
+  },
+  "entries": {
+    "Pinzgau": { "beds": null },
+    "Pongau": { "beds": null },
+    "Tennengau": { "beds": null },
+    "Flachgau": { "beds": null },
+    "Lungau": { "beds": null },
+    "Salzburg-Stadt": { "beds": null }
+  }
+}
