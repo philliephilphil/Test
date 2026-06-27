@@ -21,9 +21,69 @@ function scoreColor(score: number | null): string {
   return `hsl(${hue}, 80%, ${lightness}%)`;
 }
 
+// Browser-side fallback: when the build-time Overpass cache is empty (e.g. the
+// public Overpass instance rate-limited the Vercel build with HTTP 429), the
+// client fetches the bakeries live from OpenStreetMap directly. Overpass sends
+// permissive CORS headers, so this works from the browser. Bezirk tagging
+// (point-in-polygon) is server-only, so bezirk stays null in this path.
+const OVERPASS_ENDPOINTS = [
+  "https://overpass-api.de/api/interpreter",
+  "https://overpass.kumi.systems/api/interpreter",
+];
+
+const BAKERY_QUERY = `
+[out:json][timeout:60];
+area["name"="Salzburg"]["boundary"="administrative"]["admin_level"="4"]->.s;
+nwr["shop"="bakery"](area.s);
+out center tags;`;
+
+async function fetchBakeriesViaOverpass(): Promise<Bakery[]> {
+  let lastErr: unknown;
+  for (const url of OVERPASS_ENDPOINTS) {
+    try {
+      const res = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: "data=" + encodeURIComponent(BAKERY_QUERY),
+      });
+      if (!res.ok) throw new Error("HTTP " + res.status);
+      const json = await res.json();
+      const out: Bakery[] = [];
+      for (const el of json.elements ?? []) {
+        const lat = el.lat ?? el.center?.lat;
+        const lon = el.lon ?? el.center?.lon;
+        if (typeof lat !== "number" || typeof lon !== "number") continue;
+        const t = el.tags ?? {};
+        out.push({
+          osmId: el.id,
+          osmType: el.type === "way" ? "way" : "node",
+          name: t.name ?? null,
+          lat,
+          lon,
+          openingHours: t.opening_hours ?? null,
+          addr: {
+            street: t["addr:street"],
+            housenumber: t["addr:housenumber"],
+            postcode: t["addr:postcode"],
+            city: t["addr:city"],
+          },
+          website: t.website,
+          phone: t.phone,
+          bezirk: null,
+        });
+      }
+      return out;
+    } catch (e) {
+      lastErr = e;
+    }
+  }
+  throw lastErr ?? new Error("Overpass fehlgeschlagen");
+}
+
 export default function MapView() {
   const [bakeries, setBakeries] = useState<Bakery[]>([]);
   const [bakeriesError, setBakeriesError] = useState<string | null>(null);
+  const [bakeriesNote, setBakeriesNote] = useState<string | null>(null);
   const [pois, setPois] = useState<FrequencyPoi[]>([]);
   const [scores, setScores] = useState<ScoreByBezirk>({});
   const [districtsGeoJson, setDistrictsGeoJson] = useState<GeoJSON.FeatureCollection | null>(null);
@@ -37,12 +97,32 @@ export default function MapView() {
   });
 
   useEffect(() => {
-    fetch("/api/bakeries")
-      .then((r) => r.json())
-      .then((json) => {
-        setBakeries(json.bakeries ?? []);
-        if (json.error) setBakeriesError(json.error);
-      });
+    (async () => {
+      try {
+        const json = await (await fetch("/api/bakeries")).json();
+        const fromApi: Bakery[] = json.bakeries ?? [];
+        if (fromApi.length > 0) {
+          setBakeries(fromApi);
+          return;
+        }
+        // Build-Cache leer (z. B. Overpass-Drosselung beim Build) -> live im Browser nachladen.
+        try {
+          const live = await fetchBakeriesViaOverpass();
+          if (live.length > 0) {
+            setBakeries(live);
+            setBakeriesNote(`${live.length} Bäckereien live aus OpenStreetMap geladen (Build-Cache war leer).`);
+          } else {
+            setBakeriesError(json.error ?? "Keine Bäckereien gefunden.");
+          }
+        } catch {
+          setBakeriesError(
+            "Bäckerei-Daten konnten nicht geladen werden (OpenStreetMap evtl. kurz überlastet). Bitte später neu laden.",
+          );
+        }
+      } catch {
+        setBakeriesError("Bäckerei-Daten konnten nicht geladen werden.");
+      }
+    })();
     fetch("/api/frequency")
       .then((r) => r.json())
       .then((json) => setPois(json.pois ?? []));
@@ -74,6 +154,9 @@ export default function MapView() {
       <LayerToggle active={active} onToggle={toggleLayer} />
       {bakeriesError && (
         <div style={{ padding: 8, background: "#ffebee", color: "#b71c1c", fontSize: "0.9em" }}>{bakeriesError}</div>
+      )}
+      {bakeriesNote && (
+        <div style={{ padding: 8, background: "#e8f5e9", color: "#1b5e20", fontSize: "0.9em" }}>{bakeriesNote}</div>
       )}
       {active.schliessungen && collectionStats && (
         <div style={{ padding: 8 }}>
