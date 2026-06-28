@@ -7,7 +7,9 @@ import HeatmapLayer, { type HeatPoint } from "./HeatmapLayer";
 import LayerToggle, { type LayerKey } from "./LayerToggle";
 import ScoreBreakdownPanel from "./ScoreBreakdownPanel";
 import ClosureDataEmptyState from "./ClosureDataEmptyState";
-import type { Bakery, BezirkName, CollectionStats, FrequencyPoi, ScoreResult } from "@/lib/types";
+import OpportunityBubbles from "./OpportunityBubbles";
+import OpportunityPanel from "./OpportunityPanel";
+import type { Bakery, BezirkName, CollectionStats, FrequencyPoi, Opportunity, ScoreResult } from "@/lib/types";
 
 const SALZBURG_CENTER: [number, number] = [47.45, 13.1];
 
@@ -89,8 +91,11 @@ export default function MapView() {
   const [districtsGeoJson, setDistrictsGeoJson] = useState<GeoJSON.FeatureCollection | null>(null);
   const [collectionStats, setCollectionStats] = useState<CollectionStats | null>(null);
   const [selectedBezirk, setSelectedBezirk] = useState<BezirkName | null>(null);
+  const [opportunities, setOpportunities] = useState<Opportunity[]>([]);
+  const [selectedOpportunity, setSelectedOpportunity] = useState<Opportunity | null>(null);
   const [active, setActive] = useState<Record<LayerKey, boolean>>({
-    dichte: true,
+    chancen: true,
+    dichte: false,
     frequenz: false,
     luecken: false,
     schliessungen: false,
@@ -133,6 +138,9 @@ export default function MapView() {
         for (const entry of json.data ?? []) map[entry.bezirk] = entry.score;
         setScores(map);
       });
+    fetch("/api/opportunities")
+      .then((r) => r.json())
+      .then((json) => setOpportunities(json.data ?? []));
     fetch("/api/snapshots")
       .then((r) => r.json())
       .then(setCollectionStats);
@@ -168,11 +176,25 @@ export default function MapView() {
           <ScoreBreakdownPanel title={`Potenzial-Score: ${selectedBezirk}`} result={scores[selectedBezirk]} />
         </div>
       )}
+      {active.chancen && (
+        <div style={{ padding: 8, fontSize: "0.85em", color: "#555" }}>
+          🎯 <strong>Chancen-Layer:</strong> Bubble-Größe = Marktgröße, Farbe = Umsatz-Potenzial (🟥 niedrig → 🟩 hoch),
+          Zahl = Index 0–100. Bubble antippen zeigt die Kennzahlen.
+        </div>
+      )}
+      {active.chancen && selectedOpportunity && (
+        <div style={{ padding: 8 }}>
+          <OpportunityPanel o={selectedOpportunity} />
+        </div>
+      )}
       <MapContainer center={SALZBURG_CENTER} zoom={9} style={{ height: "70vh", width: "100%" }}>
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
+        {active.chancen && opportunities.length > 0 && (
+          <OpportunityBubbles opportunities={opportunities} onSelect={setSelectedOpportunity} />
+        )}
         {active.dichte && bakeryHeatPoints.length > 0 && (
           <HeatmapLayer points={bakeryHeatPoints} options={{ gradient: { 0.4: "blue", 0.7: "lime", 1: "red" } }} />
         )}

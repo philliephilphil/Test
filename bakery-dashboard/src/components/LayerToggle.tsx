@@ -1,6 +1,7 @@
-export type LayerKey = "dichte" | "frequenz" | "luecken" | "schliessungen";
+export type LayerKey = "chancen" | "dichte" | "frequenz" | "luecken" | "schliessungen";
 
 const LAYER_LABELS: Record<LayerKey, string> = {
+  chancen: "🎯 Chancen (Umsatz-Potenzial)",
   dichte: "Dichte (Bäckereien)",
   frequenz: "Frequenz-Potenzial",
   luecken: "Lücken/Potenzial",
