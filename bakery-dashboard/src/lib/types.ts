@@ -93,6 +93,23 @@ export type CollectionStats = {
   daysCovered: number;
 };
 
+// Aggregated decision-support KPIs per Bezirk for the "Chancen" bubble layer.
+export type Opportunity = {
+  bezirk: BezirkName;
+  referencePoint: { lat: number; lon: number };
+  opportunityScore: number | null; // 0..1 composite (= Potenzial-Score), drives bubble colour
+  marketSize: number | null; // 0..1 demand magnitude, drives bubble size
+  bakeryCount: number;
+  population: number | null;
+  nights: number | null;
+  beds: number | null;
+  frequency: number | null; // 0..1 frequency-potential proxy
+  tourismIntensity: number | null; // 0..1
+  weatherFavorability: number | null; // 0..1
+  supplyPer10k: number | null; // bakeries per 10,000 inhabitants
+  drivers: string; // human-readable "warum hier"
+};
+
 export type BakerySnapshot = {
   osmId: number;
   capturedAt: string;
