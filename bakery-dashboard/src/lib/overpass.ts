@@ -54,8 +54,18 @@ export async function runOverpassQuery(query: string): Promise<OverpassResponse>
       try {
         res = await fetch(endpoint, {
           method: "POST",
-          headers: { "Content-Type": "text/plain" },
-          body: query,
+          // Canonical Overpass POST: form-encoded `data=<query>` with a
+          // descriptive User-Agent. Public Overpass instances (and their
+          // protective proxies) reject server-side requests sent as text/plain
+          // or without a User-Agent with HTTP 406. Browsers set a User-Agent
+          // automatically, which is why the client-side fallback works while
+          // this build-time call previously failed.
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+            Accept: "application/json",
+            "User-Agent": "bakery-dashboard/1.0 (+https://github.com/philliephilphil/Test)",
+          },
+          body: "data=" + encodeURIComponent(query),
         });
       } catch (err) {
         lastError = err; // network/connection error — retryable
